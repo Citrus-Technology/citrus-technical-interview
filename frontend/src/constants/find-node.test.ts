@@ -2,10 +2,14 @@ import * as tree from '../../public/api/v1/tree.json'
 import { ProgramNode } from '../interfaces/program-node'
 import { findNode } from './find-node'
 
-test('should return undefined given an id of undefined', () => {
+test('should return parent node given an id of undefined', () => {
   const node: ProgramNode = tree as any
   const value: ProgramNode | undefined = findNode(node, undefined) as any
-  expect(value).toBeUndefined()
+  expect(value).toBeDefined()
+  expect(value?.id).toBe(tree.id)
+  expect(value?.type).toBe(tree.type)
+  expect(value?.name).toBe(tree.name)
+  expect(value?.description).toBe(tree.description)
 })
 
 test('should return the node that matches the id within the tree', () => {
@@ -25,7 +29,7 @@ test('should return the node that matches the id within the tree', () => {
 
 test('should return undefined given the node cannot be found', () => {
   const node: ProgramNode = tree as any
-  const value: ProgramNode | undefined = findNode(node, '') as any
+  const value: ProgramNode | undefined = findNode(node, 'invalid') as any
   expect(value).toBeUndefined()
 })
 
